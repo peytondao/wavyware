@@ -1,80 +1,28 @@
-# wavyware
-WavyWare
+# WavyWare
 
-WavyWare is a modern, responsive website designed for showcasing and selling PCs, components, and related hardware. This repository contains the source code for the platform.
+WavyWare is a modern and responsive website designed for showcasing and selling PCs, components, and computer hardware. This repository contains the full source code for the website.
 
-Overview
+## Overview
 
-WavyWare provides a streamlined online shopping experience focused on performance computers and hardware. The website includes product listings, detailed specifications, and a clean user interface suitable for customers browsing prebuilt or custom PC options.
+WavyWare provides an organized online shopping experience focused on performance PCs and hardware. The platform includes product listings, detailed specifications, and a clean design intended for customers browsing prebuilt or custom-built systems.
 
-Features
+## Features
 
-PC and hardware product listings
+- PC and hardware product listings
+- Responsive layout across desktop and mobile
+- Detailed product pages with specifications
+- Shopping cart functionality (if implemented in this version)
+- Product filtering and sorting
+- Clean and modern user interface
 
-Responsive layout for desktop and mobile
+## Tech Stack
 
-Product detail pages with specifications
+- Frontend: HTML, CSS, JavaScript or React/Next.js
+- Backend: Node.js and Express, Django, Laravel, or another framework
+- Database: MongoDB, MySQL, PostgreSQL
+- Deployment: Vercel, Netlify, AWS, or Docker
 
-Shopping cart system (if included in the repository)
 
-Filter and sorting tools for easier product discovery
 
-Clean and modern design focused on usability
+## Project Structure
 
-Tech Stack
-
-(Adjust this section to match your actual project)
-
-Frontend: HTML, CSS, JavaScript / React / Next.js
-
-Backend: Node.js / Express / Django / Laravel
-
-Database: MongoDB / MySQL / PostgreSQL
-
-Deployment: Vercel / Netlify / AWS / Docker
-
-Project Structure
-wavyware/
-├── public/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── assets/
-│   └── utils/
-├── package.json
-└── README.md
-
-Installation
-git clone https://github.com/<your-user>/wavyware.git
-cd wavyware
-npm install
-npm run dev
-
-Roadmap
-
-User authentication
-
-Checkout and payment integration
-
-Admin dashboard for managing products
-
-Customer reviews and ratings
-
-Enhanced filtering and search features
-
-Contributing
-
-Contributions are welcome.
-To contribute:
-
-Fork the repository
-
-Create a feature branch
-
-Commit your changes
-
-Open a pull request
-
-License
-
-This project is licensed under the MIT License.
