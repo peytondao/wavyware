@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WavyWare - Gaming Systems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #12283D;
+            --white: #FDFEFC;
+            --blue-gray: #6C8FA7;
+            --slate: #6A8AA4;
+            --dark-accent: #0d1f2d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--dark-accent) 100%);
+            color: var(--white);
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* Synthwave Grid Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(0deg, transparent 24%, rgba(108, 143, 167, 0.15) 25%, rgba(108, 143, 167, 0.15) 26%, transparent 27%, transparent 74%, rgba(108, 143, 167, 0.15) 75%, rgba(108, 143, 167, 0.15) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(108, 143, 167, 0.15) 25%, rgba(108, 143, 167, 0.15) 26%, transparent 27%, transparent 74%, rgba(108, 143, 167, 0.15) 75%, rgba(108, 143, 167, 0.15) 76%, transparent 77%, transparent);
+            background-size: 80px 80px;
+            perspective: 500px;
+            transform-style: preserve-3d;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -50%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(0deg, transparent 24%, rgba(106, 138, 164, 0.2) 25%, rgba(106, 138, 164, 0.2) 26%, transparent 27%, transparent 74%, rgba(106, 138, 164, 0.2) 75%, rgba(106, 138, 164, 0.2) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(106, 138, 164, 0.2) 25%, rgba(106, 138, 164, 0.2) 26%, transparent 27%, transparent 74%, rgba(106, 138, 164, 0.2) 75%, rgba(106, 138, 164, 0.2) 76%, transparent 77%, transparent);
+            background-size: 100px 100px;
+            transform: rotateX(60deg);
+            transform-origin: center bottom;
+            z-index: 0;
+            pointer-events: none;
+            animation: perspectiveGridMove 15s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 80px 80px;
+            }
+        }
+
+        @keyframes perspectiveGridMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 100px;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Synthwave Sun */
+        .synthwave-sun {
+            position: fixed;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 107, 147, 0.3) 0%, rgba(108, 143, 167, 0.2) 50%, transparent 70%);
+            box-shadow: 
+                0 0 60px rgba(255, 107, 147, 0.3),
+                0 0 100px rgba(255, 107, 147, 0.2),
+                0 0 140px rgba(255, 107, 147, 0.1);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .synthwave-sun::before,
+        .synthwave-sun::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .synthwave-sun::before {
+            width: 80%;
+            height: 80%;
+            background: transparent;
+            border: 2px solid rgba(255, 107, 147, 0.3);
+        }
+
+        .synthwave-sun::after {
+            width: 60%;
+            height: 60%;
+            background: transparent;
+            border: 2px solid rgba(255, 107, 147, 0.2);
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: rgba(253, 254, 252, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(253, 254, 252, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            width: 45px;
+            height: 45px;
+            background: rgba(108, 143, 167, 0.2);
+            border: 2px solid rgba(253, 254, 252, 0.2);
+            border-radius: 10px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--white);
+        }
+
+        .nav-btn:hover {
+            background: rgba(108, 143, 167, 0.4);
+            border-color: var(--slate);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 143, 167, 0.3);
+        }
+
+        /* Header with animated logo */
+        header {
+            text-align: center;
+            padding: 80px 20px 50px;
+            position: relative;
+            height: 240px;
+            overflow: visible;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            position: absolute;
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            white-space: nowrap;
+            background: linear-gradient(135deg, var(--blue-gray), var(--slate), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo-shadow {
+            animation: bounce 2.5s ease-in-out infinite;
+            filter: blur(0px);
+        }
+
+        .logo-1 { animation-delay: 0s; opacity: 0.15; filter: blur(2px); }
+        .logo-2 { animation-delay: 0.15s; opacity: 0.25; filter: blur(1.5px); }
+        .logo-3 { animation-delay: 0.3s; opacity: 0.35; filter: blur(1px); }
+        .logo-4 { animation-delay: 0.45s; opacity: 0.5; filter: blur(0.5px); }
+        .logo-5 { animation-delay: 0.6s; opacity: 0.7; }
+        .logo-main { animation-delay: 0.75s; opacity: 1; z-index: 5; }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translate(-50%, -50%) translate(0, 0);
+            }
+            50% {
+                transform: translate(-50%, -50%) translate(-35px, 35px);
+            }
+        }
+
+        .tagline {
+            color: var(--slate);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* Search Section */
+        .search-container {
+            background: rgba(253, 254, 252, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(253, 254, 252, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(108, 143, 167, 0.3);
+            border-radius: 10px;
+            background: rgba(18, 40, 61, 0.6);
+            color: var(--white);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--slate);
+            background: rgba(18, 40, 61, 0.8);
+            box-shadow: 0 0 0 4px rgba(108, 143, 167, 0.1);
+        }
+
+        .search-bar::placeholder {
+            color: rgba(253, 254, 252, 0.4);
+        }
+
+        /* Products Section */
+        .products-section {
+            background: rgba(253, 254, 252, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(253, 254, 252, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue-gray), transparent);
+        }
+
+        /* PC Cards Container */
+        .cards-wrapper {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 5px 25px;
+            scroll-behavior: smooth;
+        }
+
+        .cards-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .cards-wrapper::-webkit-scrollbar-track {
+            background: rgba(108, 143, 167, 0.1);
+            border-radius: 10px;
+        }
+
+        .cards-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(108, 143, 167, 0.4);
+            border-radius: 10px;
+        }
+
+        .cards-wrapper::-webkit-scrollbar-thumb:hover {
+            background: rgba(108, 143, 167, 0.6);
+        }
+
+        /* PC Card */
+        .pc-card {
+            min-width: 300px;
+            background: rgba(18, 40, 61, 0.6);
+            border: 1px solid rgba(253, 254, 252, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue-gray), var(--slate));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .pc-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(108, 143, 167, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .pc-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pc-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(108, 143, 167, 0.2), rgba(106, 138, 164, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pc-image::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(253, 254, 252, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .pc-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .pc-specs {
+            list-style: none;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: rgba(253, 254, 252, 0.7);
+        }
+
+        .pc-specs li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .pc-specs li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--blue-gray);
+            font-size: 1.2rem;
+        }
+
+        .pc-price {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 20px 0;
+            background: linear-gradient(135deg, var(--blue-gray), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--blue-gray), var(--slate));
+            border: none;
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 143, 167, 0.4);
+        }
+
+        .buy-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(253, 254, 252, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(253, 254, 252, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin: 12px 0;
+        }
+
+        .footer-links a {
+            color: rgba(253, 254, 252, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--blue-gray);
+            padding-left: 5px;
+        }
+
+        .email-subscription {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid rgba(108, 143, 167, 0.3);
+            border-radius: 8px;
+            background: rgba(18, 40, 61, 0.6);
+            color: var(--white);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--slate);
+            background: rgba(18, 40, 61, 0.8);
+        }
+
+        .email-input::placeholder {
+            color: rgba(253, 254, 252, 0.4);
+        }
+
+        .subscribe-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--blue-gray), var(--slate));
+            border: none;
+            border-radius: 8px;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(108, 143, 167, 0.4);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .payment-icon {
+            width: 60px;
+            height: 40px;
+            background: rgba(18, 40, 61, 0.6);
+            border: 1px solid rgba(253, 254, 252, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .payment-icon:hover {
+            background: rgba(108, 143, 167, 0.3);
+            border-color: var(--slate);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(253, 254, 252, 0.1);
+            color: rgba(253, 254, 252, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Menu Dropdown */
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 90px;
+            left: 20px;
+            background: rgba(18, 40, 61, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(253, 254, 252, 0.2);
+            border-radius: 12px;
+            min-width: 220px;
+            z-index: 1000;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-dropdown.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            color: var(--white);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(253, 254, 252, 0.05);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: rgba(108, 143, 167, 0.3);
+            padding-left: 30px;
+        }
+
+        .newsletter-desc {
+            font-size: 0.9rem;
+            color: rgba(253, 254, 252, 0.6);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Synthwave Sun Element -->
+    <div class="synthwave-sun"></div>
+    
+    <div class="container">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <div class="nav-left">
+                <button class="nav-btn" id="menuBtn">☰</button>
+            </div>
+            <div class="nav-right">
+                <button class="nav-btn" id="searchBtn">🔍</button>
+                <button class="nav-btn" id="accountBtn">👤</button>
+                <button class="nav-btn" id="cartBtn">🛒</button>
+            </div>
+        </div>
+
+        <!-- Menu Dropdown -->
+        <div class="menu-dropdown" id="menuDropdown">
+            <div class="menu-item">Home</div>
+            <div class="menu-item">Products</div>
+            <div class="menu-item">Custom Builds</div>
+            <div class="menu-item">Support</div>
+            <div class="menu-item">About</div>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <div class="logo logo-shadow logo-1">WAVYWARE</div>
+                <div class="logo logo-shadow logo-2">WAVYWARE</div>
+                <div class="logo logo-shadow logo-3">WAVYWARE</div>
+                <div class="logo logo-shadow logo-4">WAVYWARE</div>
+                <div class="logo logo-shadow logo-5">WAVYWARE</div>
+                <div class="logo logo-main">WAVYWARE</div>
+            </div>
+            <p class="tagline">Power Built Different</p>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search by specs, price, or build type..." id="searchInput">
+        </div>
+
+        <!-- Products Section -->
+        <div class="products-section">
+            <h2 class="section-title">Gaming Builds</h2>
+            
+            <div class="cards-wrapper" id="cardsWrapper">
+                <div class="pc-card" data-name="Entry Build" data-specs="rtx 3060 ryzen 5 16gb">
+                    <div class="pc-image">💾</div>
+                    <h3 class="pc-name">ENTRY BUILD</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 3060 12GB</li>
+                        <li>Ryzen 5 5600X</li>
+                        <li>16GB DDR4</li>
+                        <li>500GB NVMe</li>
+                    </ul>
+                    <div class="pc-price">$699</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="Mid Range" data-specs="rtx 4060 ti ryzen 7 32gb">
+                    <div class="pc-image">🖥️</div>
+                    <h3 class="pc-name">MID RANGE</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 4060 Ti 16GB</li>
+                        <li>Ryzen 7 5800X3D</li>
+                        <li>32GB DDR4</li>
+                        <li>1TB NVMe Gen4</li>
+                    </ul>
+                    <div class="pc-price">$1,099</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="High End" data-specs="rtx 4070 super ryzen 9 32gb">
+                    <div class="pc-image">⚙️</div>
+                    <h3 class="pc-name">HIGH END</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 4070 SUPER</li>
+                        <li>Ryzen 9 7900X</li>
+                        <li>32GB DDR5</li>
+                        <li>2TB NVMe Gen4</li>
+                    </ul>
+                    <div class="pc-price">$1,599</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="Extreme" data-specs="rtx 4080 super intel i9 64gb">
+                    <div class="pc-image">🔧</div>
+                    <h3 class="pc-name">EXTREME</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 4080 SUPER</li>
+                        <li>Intel i9-14900K</li>
+                        <li>64GB DDR5</li>
+                        <li>4TB NVMe Gen4</li>
+                    </ul>
+                    <div class="pc-price">$2,299</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="Budget" data-specs="rtx 3050 ryzen 5 16gb">
+                    <div class="pc-image">💻</div>
+                    <h3 class="pc-name">BUDGET</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 3050 8GB</li>
+                        <li>Ryzen 5 5500</li>
+                        <li>16GB DDR4</li>
+                        <li>500GB NVMe</li>
+                    </ul>
+                    <div class="pc-price">$549</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="Workstation" data-specs="rtx 4070 ti ryzen 9 64gb">
+                    <div class="pc-image">📊</div>
+                    <h3 class="pc-name">WORKSTATION</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 4070 Ti</li>
+                        <li>Ryzen 9 7950X</li>
+                        <li>64GB DDR5</li>
+                        <li>6TB Storage</li>
+                    </ul>
+                    <div class="pc-price">$2,099</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="Streaming" data-specs="rtx 4060 intel i7 32gb">
+                    <div class="pc-image">📹</div>
+                    <h3 class="pc-name">STREAMING</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 4060 8GB</li>
+                        <li>Intel i7-13700K</li>
+                        <li>32GB DDR5</li>
+                        <li>1TB NVMe Gen4</li>
+                    </ul>
+                    <div class="pc-price">$1,299</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+
+                <div class="pc-card" data-name="Ultimate" data-specs="rtx 4090 intel i9 128gb">
+                    <div class="pc-image">⚡</div>
+                    <h3 class="pc-name">ULTIMATE</h3>
+                    <ul class="pc-specs">
+                        <li>RTX 4090 24GB</li>
+                        <li>Intel i9-14900KS</li>
+                        <li>128GB DDR5</li>
+                        <li>8TB NVMe Gen5</li>
+                    </ul>
+                    <div class="pc-price">$3,999</div>
+                    <button class="buy-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Policies</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Shipping Information</a></li>
+                        <li><a href="#">Warranty Coverage</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p class="newsletter-desc">Stay updated with new builds, exclusive deals, and gaming tech news.</p>
+                    <div class="email-subscription">
+                        <input type="email" class="email-input" placeholder="your@email.com">
+                        <button class="subscribe-btn">Subscribe</button>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Payment Methods</h4>
+                    <div class="payment-methods">
+                        <div class="payment-icon">VISA</div>
+                        <div class="payment-icon">MC</div>
+                        <div class="payment-icon">AMEX</div>
+                        <div class="payment-icon">DISC</div>
+                        <div class="payment-icon">PAYPAL</div>
+                        <div class="payment-icon">APPLE</div>
+                        <div class="payment-icon">GPAY</div>
+                        <div class="payment-icon">BTC</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 WavyWare | Premium Gaming Systems | Built with Precision</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.pc-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            cards.forEach(card => {
+                const name = card.dataset.name.toLowerCase();
+                const specs = card.dataset.specs.toLowerCase();
+                const price = card.querySelector('.pc-price').textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || specs.includes(searchTerm) || price.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Cart button functionality
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.target.textContent = 'Added ✓';
+                e.target.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                setTimeout(() => {
+                    e.target.textContent = 'Add to Cart';
+                    e.target.style.background = 'linear-gradient(135deg, var(--blue-gray), var(--slate))';
+                }, 2000);
+            });
+        });
+
+        // Menu dropdown
+        const menuBtn = document.getElementById('menuBtn');
+        const menuDropdown = document.getElementById('menuDropdown');
+
+        menuBtn.addEventListener('click', () => {
+            menuDropdown.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+                menuDropdown.classList.remove('active');
+            }
+        });
+
+        // Nav button functionality
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            searchInput.focus();
+            searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        document.getElementById('accountBtn').addEventListener('click', () => {
+            alert('Account features coming soon!');
+        });
+
+        document.getElementById('cartBtn').addEventListener('click', () => {
+            alert('Shopping cart coming soon!');
+        });
+
+        // Email subscription
+        document.querySelector('.subscribe-btn').addEventListener('click', () => {
+            const emailInput = document.querySelector('.email-input');
+            if (emailInput.value && emailInput.value.includes('@')) {
+                alert('Thanks for subscribing! Check your inbox soon.');
+                emailInput.value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+    </script>
+</body>
+</html>
