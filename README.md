@@ -1,6 +1,6 @@
 # wavyware
 
-WavyWare is a modern and responsive website designed for showcasing and selling PCs, components, and computer hardware. This repository contains the full source code for the website.
+wavyware is a modern and responsive website designed for showcasing and selling PCs, components, and computer hardware. This repository contains the full source code for the website.
 
 ## Overview
 
