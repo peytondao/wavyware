@@ -1,10 +1,10 @@
-# WavyWare
+# wavyware
 
 WavyWare is a modern and responsive website designed for showcasing and selling PCs, components, and computer hardware. This repository contains the full source code for the website.
 
 ## Overview
 
-WavyWare provides an organized online shopping experience focused on performance PCs and hardware. The platform includes product listings, detailed specifications, and a clean design intended for customers browsing prebuilt or custom-built systems.
+wavyware provides an organized online shopping experience focused on performance PCs and hardware. The platform includes product listings, detailed specifications, and a clean design intended for customers browsing prebuilt or custom-built systems.
 
 ## Features
 
@@ -25,4 +25,12 @@ WavyWare provides an organized online shopping experience focused on performance
 
 
 ## Project Structure
-
+wavyware/
+├── public/
+├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── assets/
+│ └── utils/
+├── package.json
+└── README.md
